@@ -14,6 +14,8 @@
 		FBA120671F2C663200DF4D81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA120651F2C663200DF4D81 /* Main.storyboard */; };
 		FBA120691F2C663200DF4D81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBA120681F2C663200DF4D81 /* Assets.xcassets */; };
 		FBA1206C1F2C663200DF4D81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA1206A1F2C663200DF4D81 /* LaunchScreen.storyboard */; };
+		FBA120751F2C6D8B00DF4D81 /* ServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA120741F2C6D8B00DF4D81 /* ServerManager.m */; };
+		FBA120781F2C90E800DF4D81 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA120771F2C90E800DF4D81 /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,10 @@
 		FBA120681F2C663200DF4D81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBA1206B1F2C663200DF4D81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FBA1206D1F2C663200DF4D81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FBA120731F2C6D8B00DF4D81 /* ServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerManager.h; sourceTree = "<group>"; };
+		FBA120741F2C6D8B00DF4D81 /* ServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerManager.m; sourceTree = "<group>"; };
+		FBA120761F2C90E800DF4D81 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		FBA120771F2C90E800DF4D81 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,10 @@
 				FBA1206A1F2C663200DF4D81 /* LaunchScreen.storyboard */,
 				FBA1206D1F2C663200DF4D81 /* Info.plist */,
 				FBA1205C1F2C663200DF4D81 /* Supporting Files */,
+				FBA120731F2C6D8B00DF4D81 /* ServerManager.h */,
+				FBA120741F2C6D8B00DF4D81 /* ServerManager.m */,
+				FBA120761F2C90E800DF4D81 /* User.h */,
+				FBA120771F2C90E800DF4D81 /* User.m */,
 			);
 			path = APITest;
 			sourceTree = "<group>";
@@ -225,6 +235,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBA120781F2C90E800DF4D81 /* User.m in Sources */,
+				FBA120751F2C6D8B00DF4D81 /* ServerManager.m in Sources */,
 				FBA120641F2C663200DF4D81 /* ViewController.m in Sources */,
 				FBA120611F2C663200DF4D81 /* AppDelegate.m in Sources */,
 				FBA1205E1F2C663200DF4D81 /* main.m in Sources */,
@@ -386,6 +398,7 @@
 				FBA120721F2C663200DF4D81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

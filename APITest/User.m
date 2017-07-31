@@ -10,6 +10,7 @@
 
 @implementation User
 
+//для того чтобы не обращаяться по ключу и значению
 - (id)initWithServerResponse:(NSDictionary *) responseObject
 {
     self = [super init];

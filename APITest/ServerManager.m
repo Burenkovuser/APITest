@@ -9,10 +9,13 @@
 #import "ServerManager.h"
 #import <AFNetworking/AFNetworking.h>
 #import "User.h"
+#import "LoginViewController.h"
+#import "AccessToken.h"
 
 @interface ServerManager()
 
 @property (strong, nonatomic) AFHTTPSessionManager *requesOperationManager;
+@property (strong, nonatomic) AccessToken *assessToken;
 
 @end
 
@@ -41,9 +44,29 @@
     return self;
 }
 
+- (void)authorizeUser:(void (^)(User *))complection {
+    LoginViewController *vc = [[LoginViewController alloc] initWithCompletionBlock:^(AccessToken *token) {
+        self.assessToken = token;
+        
+        if (complection) {
+            complection(nil);
+        }
+    }];
+    
+    //показываем контроллер
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    UIViewController *mainVC =  [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    [mainVC presentViewController:nav
+                         animated:YES
+                       completion:nil];
+}
 
-- (void) getFriendsWithOffset:(NSInteger) offset
-                        count:(NSInteger) count
+
+
+- (void) getFriendsWithOffset:(NSInteger) offset // смещение
+                        count:(NSInteger) count  //количество
                     onSuccess:(void(^)(NSArray *friends)) success
                     onFailure:(void(^)(NSError *error, NSInteger statusCode)) falure {
     

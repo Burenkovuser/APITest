@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A878641476DE197A17219430 /* Pods_APITest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 173A062DD2BD405DC0617626 /* Pods_APITest.framework */; };
+		FB09CFCA1F2EFB4E00D0CBC1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB09CFC91F2EFB4E00D0CBC1 /* LoginViewController.m */; };
+		FB09CFCD1F2EFBFB00D0CBC1 /* AccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = FB09CFCC1F2EFBFB00D0CBC1 /* AccessToken.m */; };
 		FBA1205E1F2C663200DF4D81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA1205D1F2C663200DF4D81 /* main.m */; };
 		FBA120611F2C663200DF4D81 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA120601F2C663200DF4D81 /* AppDelegate.m */; };
 		FBA120641F2C663200DF4D81 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA120631F2C663200DF4D81 /* ViewController.m */; };
@@ -22,6 +24,10 @@
 		173A062DD2BD405DC0617626 /* Pods_APITest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_APITest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C482B8C13222DA2BA8ADD74A /* Pods-APITest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APITest.release.xcconfig"; path = "Pods/Target Support Files/Pods-APITest/Pods-APITest.release.xcconfig"; sourceTree = "<group>"; };
 		C69F91DF3D428A4CB6E7BE37 /* Pods-APITest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-APITest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-APITest/Pods-APITest.debug.xcconfig"; sourceTree = "<group>"; };
+		FB09CFC81F2EFB4E00D0CBC1 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		FB09CFC91F2EFB4E00D0CBC1 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		FB09CFCB1F2EFBFB00D0CBC1 /* AccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessToken.h; sourceTree = "<group>"; };
+		FB09CFCC1F2EFBFB00D0CBC1 /* AccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessToken.m; sourceTree = "<group>"; };
 		FBA120591F2C663200DF4D81 /* APITest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APITest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBA1205D1F2C663200DF4D81 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FBA1205F1F2C663200DF4D81 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -101,6 +107,10 @@
 				FBA120741F2C6D8B00DF4D81 /* ServerManager.m */,
 				FBA120761F2C90E800DF4D81 /* User.h */,
 				FBA120771F2C90E800DF4D81 /* User.m */,
+				FB09CFCB1F2EFBFB00D0CBC1 /* AccessToken.h */,
+				FB09CFCC1F2EFBFB00D0CBC1 /* AccessToken.m */,
+				FB09CFC81F2EFB4E00D0CBC1 /* LoginViewController.h */,
+				FB09CFC91F2EFB4E00D0CBC1 /* LoginViewController.m */,
 			);
 			path = APITest;
 			sourceTree = "<group>";
@@ -237,6 +247,8 @@
 			files = (
 				FBA120781F2C90E800DF4D81 /* User.m in Sources */,
 				FBA120751F2C6D8B00DF4D81 /* ServerManager.m in Sources */,
+				FB09CFCA1F2EFB4E00D0CBC1 /* LoginViewController.m in Sources */,
+				FB09CFCD1F2EFBFB00D0CBC1 /* AccessToken.m in Sources */,
 				FBA120641F2C663200DF4D81 /* ViewController.m in Sources */,
 				FBA120611F2C663200DF4D81 /* AppDelegate.m in Sources */,
 				FBA1205E1F2C663200DF4D81 /* main.m in Sources */,

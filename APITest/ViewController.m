@@ -27,7 +27,10 @@ static NSInteger friendsInRequest = 5;
     
     self.friendsArray = [NSMutableArray array];
     
-    [self getFriendFromServer];
+   // [self getFriendFromServer];
+    [[ServerManager sharedManager] authorizeUser:^(User *user) {
+        NSLog(@"TADA");
+    }];
 }
 
 
@@ -70,7 +73,7 @@ onFailure:^(NSError *error, NSInteger statusCode) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [self.friendsArray count] + 1;
+    return [self.friendsArray count] + 1;//для добавить еще
 }
 
 
@@ -98,7 +101,7 @@ onFailure:^(NSError *error, NSInteger statusCode) {
         //простой метод получения картинки
         //[cell.imageView setImageWithURL: friend.imageURL];
         
-        //контролируем получение карнтинки
+        //контролируем получение картинки
         NSURLRequest *request = [NSURLRequest requestWithURL:friend.imageURL];
         __weak UITableViewCell *weakCell = cell;
         

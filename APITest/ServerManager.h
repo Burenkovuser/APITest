@@ -8,10 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+@class User;
+
 @interface ServerManager : NSObject
+
+@property (strong, nonatomic, readonly) User *currentUser; //пользоваетль который залогигин, readonly чтобы можно было изменить
+
+
 //синглтон
 + (ServerManager *) sharedManager;
-// получаем друзей и записываем в блок если успех
+
+- (void) authorizeUser:(void(^)(User * user)) complection;
+
+// получаем друзей и записываем в блок если успех (функция делаяется мной)
 - (void) getFriendsWithOffset:(NSInteger) offset
                         count:(NSInteger) count
                     onSuccess:(void(^)(NSArray *friends)) success

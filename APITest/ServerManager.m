@@ -48,21 +48,84 @@
     LoginViewController *vc = [[LoginViewController alloc] initWithCompletionBlock:^(AccessToken *token) {
         self.assessToken = token;
         
-        if (complection) {
+        if (token) {
+            
+            [self getUser:self.assessToken.userID
+                onSuccess:^(User *user) {
+                    if(complection) {
+                        complection(user);
+                    }
+                }
+                onFailure:^(NSError *error, NSInteger statusCode) {
+                    if(complection) {
+                        complection(nil);
+                    }
+                }];
+            
+        } else if(complection) {
             complection(nil);
         }
+
     }];
     
     //показываем контроллер
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     
-    UIViewController *mainVC =  [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *mainVC =  [[[UIApplication sharedApplication] windows] firstObject].rootViewController;
+
+  // UIViewController* mainVC = [[[UIApplication sharedApplication] keyWindow] rootViewController];
     
     [mainVC presentViewController:nav
                          animated:YES
                        completion:nil];
 }
 
+- (void) getUser:(NSString *) userID
+       onSuccess:(void(^)(User *user)) success
+       onFailure:(void(^)(NSError *error, NSInteger statusCode)) failure {
+    /*
+    NSArray* fields = @[@"photo_max",
+                        @"sex",
+                        @"bdate",
+                        @"country",
+                        @"city"];
+    */
+    
+    NSDictionary* params = [NSDictionary
+                            dictionaryWithObjectsAndKeys:
+                            userID, @"user_ids",
+                            @"photo_50", @"fields",
+                            @"nom", @"name_case", nil];
+    
+    
+    [self.requesOperationManager GET:@"users.get"
+                  parameters:params
+                    progress:nil
+                     success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary* responseObject) {
+                         
+                         
+                         NSArray *dictsArray = [responseObject objectForKey:@"response"];
+                         
+                         if ([dictsArray count] > 0) {
+                             User *user = [[User alloc] initWithServerResponse:[dictsArray firstObject]];
+                             if (success) {
+                                 success(user);
+                             }
+                         } else {
+                             if (failure) {
+                                 failure(nil, [(NSHTTPURLResponse*)[task response] statusCode]);
+                             }
+                         }
+
+                         
+                     } failure:^(NSURLSessionTask *operation, NSError *error) {
+                         NSLog(@"Error: %@", error);
+                         
+                     }];
+    
+
+    
+}
 
 
 - (void) getFriendsWithOffset:(NSInteger) offset // смещение

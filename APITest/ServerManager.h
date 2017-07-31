@@ -20,6 +20,10 @@
 
 - (void) authorizeUser:(void(^)(User * user)) complection;
 
+- (void) getUser:(NSString *) userID
+       onSuccess:(void(^)(User *user)) success
+       onFailure:(void(^)(NSError *error, NSInteger statusCode)) falure;
+
 // получаем друзей и записываем в блок если успех (функция делаяется мной)
 - (void) getFriendsWithOffset:(NSInteger) offset
                         count:(NSInteger) count

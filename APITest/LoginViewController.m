@@ -9,9 +9,10 @@
 #import "LoginViewController.h"
 #import "AccessToken.h"
 
-@interface LoginViewController ()
+@interface LoginViewController ()<UIWebViewDelegate>
 
 @property (copy, nonatomic) LoginCompletionBlock completionBlock;
+@property (weak, nonatomic) UIWebView *webView;
 
 @end
 
@@ -41,17 +42,44 @@ return self;
     
     [self.view addSubview:webview];
     
+    self.webView = webview;
+    
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                           target:self
                                                                           action:@selector(actionCancel:)];
     [self.navigationItem setRightBarButtonItem:item animated:NO];
     
     self.navigationItem.title = @"Login";
+    
+    NSString* urlString =@"https://oauth.vk.com/authorize?"
+                           "client_id="
+                           "display=mobile&"
+                           "redirect_uri=https://oauth.vk.com/blank.html&"
+                           "scope=139286&" // + 2 + 4 + 16 + 131072 + 8192
+                           "response_type=token&"
+                           "v=5.65&"
+                           "state=123456&"
+                           "revoke=1";//revoke удалить потом
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    NSURLRequest *request =[NSURLRequest requestWithURL:url];
+    
+    webview.delegate = self;
+    
+    [webview loadRequest: request];
+    
+    
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) dealloc {
+    self.webView.delegate = nil;
 }
 
 #pragma mark - Actions
@@ -65,5 +93,152 @@ return self;
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }
+
+
+#pragma mark - UIWebViewDelegete
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    NSString* urlString = [request.URL absoluteString];
+    
+   //разбиваем на части приходящий объект
+    
+    //if ([[[request URL] host] isEqualToString:@"https://oauth.vk.com/blank.html&"]) {
+    
+    if ([urlString hasPrefix:@"https://oauth.vk.com/blank.html#access_token="]) {
+        
+        AccessToken * token = [[AccessToken alloc] init];
+        
+        NSString *query = [[request URL] description];
+        
+        NSArray *array = [query componentsSeparatedByString:@"#"];
+        
+        if ([array count] > 1) {
+            query = [array lastObject];
+        }
+        
+        NSArray *pairs = [query componentsSeparatedByString:@"&"];
+        
+        for (NSString* pair in pairs) {
+            
+            NSArray* values = [pair componentsSeparatedByString:@"="];
+            
+            if (values.count == 2) {
+                
+                NSString* key = [values firstObject];
+                
+                if ([key isEqualToString:@"access_token"]) {
+                    
+                    token.token = [values lastObject];
+                    
+                } else if ([key isEqualToString:@"expires_in"]) {
+                    
+                    NSString* intervalString = [values lastObject];
+                    
+                    NSTimeInterval interval = [intervalString doubleValue];
+                    
+                    NSDate* expirationDate = [NSDate dateWithTimeIntervalSinceNow:interval];
+                    
+                    token.expirationDate = expirationDate;
+                    
+                } else if ([key isEqualToString:@"user_id"]) {
+                    
+                    //NSInteger userIdInt = [[values lastObject] intValue];
+                    
+                    //NSNumber* userIdVal = [NSNumber numberWithInteger:userIdInt];
+                    
+                    token.userID = [values lastObject];
+                }
+            }
+        }
+        self.webView.delegate = nil;
+        
+        if (self.completionBlock) {
+            self.completionBlock(token);
+        }
+        
+        [self dismissViewControllerAnimated:YES
+                                 completion:nil];
+    
+    
+        return NO;
+    }
+    
+   // NSLog(@"%@", [request URL]);
+    return YES;
+    
+    /*
+    NSString* urlString = [request.URL absoluteString];
+    
+    if ([urlString hasPrefix:@"https://oauth.vk.com/blank.html#access_token="]) {
+        
+        VMToken* token = [[VMToken alloc] init];
+        
+        NSArray* fragments = [urlString componentsSeparatedByString:@"#"];
+        
+        
+        NSString* fragment = [fragments lastObject];
+        
+        NSArray* pairs = [fragment componentsSeparatedByString:@"&"];
+        
+        
+        
+        for (NSString* pair in pairs) {
+            
+            NSArray* values = [pair componentsSeparatedByString:@"="];
+            
+            if (values.count == 2) {
+                
+                NSString* key = [values firstObject];
+                
+                if ([key isEqualToString:@"access_token"]) {
+                    
+                    token.tokenString = [values lastObject];
+                    
+                } else if ([key isEqualToString:@"expires_in"]) {
+                    
+                    NSString* intervalString = [values lastObject];
+                    
+                    NSTimeInterval interval = [intervalString doubleValue];
+                    
+                    NSDate* expirationDate = [NSDate dateWithTimeIntervalSinceNow:interval];
+                    
+                    token.expirationDate = expirationDate;
+                    
+                } else if ([key isEqualToString:@"user_id"]) {
+                    
+                    NSInteger userIdInt = [[values lastObject] intValue];
+                    
+                    NSNumber* userIdVal = [NSNumber numberWithInteger:userIdInt];
+                    
+                    token.userID = userIdVal;
+                }
+            }
+        }
+        
+     
+        self.webView.delegate = nil;
+        
+        if (self.initBlock) {
+            
+            self.initBlock(token);
+        }
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        return NO;
+        
+    }
+    
+    return YES;
+
+    */
+    //https://oauth.vk.com/blank.html#access_token=96173b02f1ce0e20aeeeedfcbf1662ecdd532832f927081d7901ce984f610a7c38b7ad26d5e855acb332e&expires_in=86400&user_id=263292877&state=123456
+    
+    
+}
+
 
 @end

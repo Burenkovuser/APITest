@@ -15,6 +15,7 @@
 @interface ViewController ()
 
 @property (strong, nonatomic) NSMutableArray *friendsArray;
+@property (assign, nonatomic) BOOL firstTimeAppear;
 
 @end
 
@@ -28,11 +29,28 @@ static NSInteger friendsInRequest = 5;
     self.friendsArray = [NSMutableArray array];
     
    // [self getFriendFromServer];
-    [[ServerManager sharedManager] authorizeUser:^(User *user) {
-        NSLog(@"TADA");
-    }];
+    //[[ServerManager sharedManager] authorizeUser:^(User *user) {
+        //NSLog(@"TADA");
+    //}];
+    
+    self.firstTimeAppear = YES;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+    if (self.firstTimeAppear) {
+        self.firstTimeAppear = NO;
+        
+        [[ServerManager sharedManager] authorizeUser:^(User *user) {
+            
+            NSLog(@"Authorized");
+            NSLog(@"%@ %@", user.firstName, user.lastName);
+        }];
+    }
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
